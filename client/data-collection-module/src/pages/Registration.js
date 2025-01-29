@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setCredentials } from "../features/auth/authSlice";
 import api from "../services/api";
+import { setCredentials } from "../features/auth/authSlice";
 
-const Login = () => {
+const Registeration = () => {
+  const [username, setUsername] = useState("");
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -13,29 +15,53 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const User={
+        "username":username,
+		"passwordHash":password,
+		"fullName":fullName,
+        "email":email
+    }
     try {
-      // Simulate API call (replace this with your real API integration)
-      const response = await api.post("/auth/login", { email, password });
-      const { token, role, user } = response.data;
-
-      // Save credentials in Redux
-      dispatch(setCredentials({ user, token, role }));
-
-      // Redirect based on role
-      if (role === "admin") navigate("/admin/dashboard");
-      else if (role === "verifier") navigate("/verifier/dashboard");
+      const response = await api.post("/user/register", User);
+      const { token, user, role: userRole } = response.data;
+      dispatch(setCredentials({ user, token, role: userRole }));
+      if (userRole === "admin") navigate("/admin/dashboard");
+      else if (userRole === "verifier") navigate("/verifier/dashboard");
       else navigate("/user/dashboard");
     } catch (err) {
-      setError("Invalid email or password");
+        console.log(err);
+      setError("Registration failed. Please try again.");
     }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors">
       <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg max-w-md w-full">
-        <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white mb-6">Login</h2>
+        <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white mb-6">Register</h2>
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
         <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-2">Username</label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="w-full px-4 py-2 border rounded dark:bg-gray-700 dark:text-white focus:outline-none"
+              placeholder="Enter your username"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-2">Full Name</label>
+            <input
+              type="text"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              className="w-full px-4 py-2 border rounded dark:bg-gray-700 dark:text-white focus:outline-none"
+              placeholder="Enter your full name"
+              required
+            />
+          </div>
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-2">Email</label>
             <input
@@ -62,18 +88,17 @@ const Login = () => {
             type="submit"
             className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition"
           >
-            Login
+            Register
           </button>
-
         </form>
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-600 dark:text-gray-400">
-            New user?{" "}
+            Already have an account?{" "}
             <button
-              onClick={() => navigate("/signout")}
+              onClick={() => navigate("/login")}
               className="text-blue-500 hover:text-blue-600"
             >
-              SignOut
+              Login here
             </button>
           </p>
         </div>
@@ -82,4 +107,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Registeration;

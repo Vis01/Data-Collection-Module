@@ -8,6 +8,8 @@ import AdminDashboard from "./pages/AdminDashboard";
 import FileUploadPage from "./pages/FileUploadPage";
 import UserFilesPage from "./pages/UserFilesPage";
 import ProtectedRoute from "./components/Auth/ProtectedRoute";
+import Registeration from "./pages/Registration";
+import FileDetailsPage from "./pages/FileDetailsPage";
 
 function App() {
   return (
@@ -15,12 +17,13 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/signout" element={<Registeration />} />
         <Route
           path="/user/dashboard"
           element={
-            <ProtectedRoute roles={["user"]}>
+           // <ProtectedRoute roles={["user"]}>
               <UserDashboard />
-            </ProtectedRoute>
+           // </ProtectedRoute>
           }
         />
         <Route
@@ -42,17 +45,25 @@ function App() {
         <Route
           path="/user/files"
           element={
-            <ProtectedRoute roles={["user"]}>
+           // <ProtectedRoute roles={["user"]}>
               <UserFilesPage />
-            </ProtectedRoute>
+           // </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user/fileDetails/:documentId"
+          element={
+           // <ProtectedRoute roles={["user"]}>
+              <FileDetailsPage />
+          //  </ProtectedRoute>
           }
         />
         <Route
           path="/user/upload"
           element={
-            <ProtectedRoute roles={["user"]}>
+           // <ProtectedRoute roles={["user"]}>
               <FileUploadPage />
-            </ProtectedRoute>
+          //  </ProtectedRoute>
           }
         />
       </Routes>
