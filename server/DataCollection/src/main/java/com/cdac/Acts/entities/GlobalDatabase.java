@@ -2,6 +2,7 @@ package com.cdac.Acts.entities;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,18 +10,23 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name="globaldatabase")
 public class GlobalDatabase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long globalId;
+    @Column(name="global_id")
+    private Integer globalId;
 
     @Lob
+    @Column(name="sentence_text", columnDefinition = "TEXT")
     private String sentenceText;
 
     @Lob
+    @Column(name="translation_text" ,columnDefinition = "TEXT")
     private String translationText;
 
     @ManyToOne
@@ -35,13 +41,14 @@ public class GlobalDatabase {
     @JoinColumn(name = "added_by", nullable = false)
     private User addedBy;
 
+    @Column(name="added_date")
     private LocalDateTime addedDate = LocalDateTime.now();
 
-	public Long getGlobalId() {
+	public Integer getGlobalId() {
 		return globalId;
 	}
 
-	public void setGlobalId(Long globalId) {
+	public void setGlobalId(Integer globalId) {
 		this.globalId = globalId;
 	}
 
@@ -93,7 +100,7 @@ public class GlobalDatabase {
 		this.addedDate = addedDate;
 	}
 
-	public GlobalDatabase(Long globalId, String sentenceText, String translationText, Language sentenceLanguage,
+	public GlobalDatabase(Integer globalId, String sentenceText, String translationText, Language sentenceLanguage,
 			Language translationLanguage, User addedBy, LocalDateTime addedDate) {
 		super();
 		this.globalId = globalId;

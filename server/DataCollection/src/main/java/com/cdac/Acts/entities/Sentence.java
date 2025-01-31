@@ -2,32 +2,41 @@ package com.cdac.Acts.entities;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name="sentences")
 public class Sentence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long sentenceId;
+    @Column(name="sentence_id")
+    private Integer sentenceId;
 
+    @Column(name="document_id")
+    private Integer documentId;
+    
+    @Column(name="sentence_text")
     private String originalSentence;
 
+    @Column(name="translation_text")
     private String translation;
 
-    private Long documentId;
+    @Column(name="sentence_language_id")
+	private byte sourcelanguageId;
+    
+    @Column(name="translation_language_id")
+    private byte targetlanguageId;
 
-    private Long languageId;
-
-    private LocalDateTime createdAt;
-
-	public Long getSentenceId() {
+	public Integer getSentenceId() {
 		return sentenceId;
 	}
 
-	public void setSentenceId(Long sentenceId) {
+	public void setSentenceId(Integer sentenceId) {
 		this.sentenceId = sentenceId;
 	}
 
@@ -47,39 +56,38 @@ public class Sentence {
 		this.translation = translation;
 	}
 
-	public Long getDocumentId() {
+	public Integer getDocumentId() {
 		return documentId;
 	}
 
-	public void setDocumentId(Long documentId) {
+	public void setDocumentId(Integer documentId) {
 		this.documentId = documentId;
 	}
 
-	public Long getLanguageId() {
-		return languageId;
+	public byte getSourcelanguageId() {
+		return sourcelanguageId;
 	}
 
-	public void setLanguageId(Long languageId) {
-		this.languageId = languageId;
+	public void setSourceLanguageId(byte sourcelanguageId) {
+		this.sourcelanguageId= sourcelanguageId;
 	}
 
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
+	public byte getTargetlanguageId() {
+		return targetlanguageId;
 	}
 
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
+	public void setTargetlanguageId(byte targetlanguageId) {
+		this.targetlanguageId = targetlanguageId;
 	}
-
-	public Sentence(Long sentenceId, String originalSentence, String translation, Long documentId, Long languageId,
+	public Sentence(Integer sentenceId, String originalSentence, String translation, Integer documentId, byte sourcelanguageId,byte targetlanguageId,
 			LocalDateTime createdAt) {
 		super();
 		this.sentenceId = sentenceId;
 		this.originalSentence = originalSentence;
 		this.translation = translation;
 		this.documentId = documentId;
-		this.languageId = languageId;
-		this.createdAt = createdAt;
+		this.sourcelanguageId = sourcelanguageId;
+		this.targetlanguageId = targetlanguageId;
 	}
 
 	public Sentence() {

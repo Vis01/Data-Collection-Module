@@ -1,15 +1,8 @@
 package com.cdac.Acts.Services;
 
-import java.io.InputStream;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,8 +13,12 @@ import com.cdac.Acts.Repositories.LanguageRepository;
 import com.cdac.Acts.Repositories.SentenceRepository;
 import com.cdac.Acts.entities.Document;
 import com.cdac.Acts.entities.Language;
+import com.cdac.Acts.entities.Language;
 import com.cdac.Acts.entities.Sentence;
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class FileParserService {
@@ -35,44 +32,38 @@ public class FileParserService {
     @Autowired
     private LanguageRepository languageRepository;
 
-    public void parseAndSaveFile(MultipartFile file, Long userId) throws Exception {
-        // Save document metadata
-        Document document = saveDocumentMetadata(file, userId);
+    public void processFile(MultipartFile file, int userId, byte sourceLanguageId, byte targetLanguageId) throws Exception {
+        // Save the document metadata
+        Document document = new Document();
+        document.setUserId(userId);
+        document.setFileName(file.getOriginalFilename());
+        documentsRepository.save(document);
 
         // Determine file type and parse the file
         String fileType = file.getContentType();
         List<Sentence> sentences = new ArrayList<>();
 
-        Long defaultLanguageId = 1L; // Replace with your logic to select the language
-        Language language = languageRepository.findById(defaultLanguageId)
+        
+        Language language = languageRepository.findById(1L)  
                 .orElseThrow(() -> new IllegalArgumentException("Invalid language ID"));
 
         if (fileType != null && fileType.equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")) {
-            sentences = parseExcelFile(file.getInputStream(), document.getDocumentId(), language.getLanguageId());
+            // If it's an Excel file, parse it
+            sentences = parseExcelFile(file.getInputStream(), document.getDocumentId(), sourceLanguageId, targetLanguageId);
+        } 
+        else if (fileType != null && fileType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document")) {
+            // If it's a Word document, parse it
+            sentences = parseWordFile(file.getInputStream(), document.getDocumentId(), sourceLanguageId, targetLanguageId);
         } else {
-            sentences = parseOtherFile(file.getInputStream(), document.getDocumentId(), language.getLanguageId());
+            // For other files, use Tika to parse
+            sentences = parseOtherFile(file.getInputStream(), document.getDocumentId(), sourceLanguageId, targetLanguageId);
         }
 
-        // Save sentences to the database
+        // Save the parsed sentences to the database
         sentencesRepository.saveAll(sentences);
     }
 
-    private Document saveDocumentMetadata(MultipartFile file, Long userId) throws Exception {
-        String filePath = "path/to/storage/" + file.getOriginalFilename(); // Replace with actual storage logic
-
-        // Save the file to a storage location (not implemented in this example)
-        file.transferTo(new java.io.File(filePath));
-
-        Document document = new Document();
-        document.setUserId(userId);
-        document.setFileName(file.getOriginalFilename());
-        document.setFilePath(filePath);
-       
-
-        return documentsRepository.save(document);
-    }
-
-    private List<Sentence> parseExcelFile(InputStream inputStream, Long documentId, Long languageId) throws Exception {
+    private List<Sentence> parseExcelFile(InputStream inputStream, Integer documentId, byte sourceLanguageId, byte targetLanguageId) throws Exception {
         List<Sentence> sentences = new ArrayList<>();
         Workbook workbook = WorkbookFactory.create(inputStream);
         Sheet sheet = workbook.getSheetAt(0);
@@ -87,8 +78,8 @@ public class FileParserService {
                 Sentence sentence = new Sentence();
                 sentence.setOriginalSentence(sentenceCell.getStringCellValue());
                 sentence.setDocumentId(documentId);
-                sentence.setLanguageId(languageId);
-                sentence.setCreatedAt(LocalDateTime.now());
+                sentence.setSourceLanguageId(sourceLanguageId);
+                sentence.setTargetlanguageId(targetLanguageId);
 
                 if (translationCell != null) {
                     sentence.setTranslation(translationCell.getStringCellValue());
@@ -102,18 +93,46 @@ public class FileParserService {
         return sentences;
     }
 
-    private List<Sentence> parseOtherFile(InputStream inputStream, Long documentId, Long languageId) throws Exception {
+    private List<Sentence> parseWordFile(InputStream inputStream, Integer documentId, byte sourceLanguageId, byte targetLanguageId) throws Exception {
+        List<Sentence> sentences = new ArrayList<>();
+
+        // Create a Word document object using Apache POI
+        XWPFDocument document = new XWPFDocument(inputStream);
+
+        // Iterate over paragraphs to extract sentences
+        for (org.apache.poi.xwpf.usermodel.XWPFParagraph paragraph : document.getParagraphs()) {
+            String paragraphText = paragraph.getText().trim();
+            if (!paragraphText.isEmpty()) {
+                // Split the paragraph into original sentence and translation using the delimiter " - "
+                String[] parts = paragraphText.split(" - ");
+                if (parts.length == 2) {
+                    Sentence sentence = new Sentence();
+                    sentence.setOriginalSentence(parts[0].trim());
+                    sentence.setTranslation(parts[1].trim());
+                    sentence.setDocumentId(documentId);
+                    sentence.setSourceLanguageId(sourceLanguageId);
+                    sentence.setTargetlanguageId(targetLanguageId);
+                    sentences.add(sentence);
+                }
+            }
+        }
+
+        document.close();
+        return sentences;
+    }
+    private List<Sentence> parseOtherFile(InputStream inputStream, Integer documentId, byte sourceLanguageId, byte targetLanguageId) throws Exception {
         List<Sentence> sentences = new ArrayList<>();
         Tika tika = new Tika();
         String content = tika.parseToString(inputStream);
 
+        // Split the content by lines
         for (String line : content.split("\n")) {
             if (!line.trim().isEmpty()) {
                 Sentence sentence = new Sentence();
                 sentence.setOriginalSentence(line.trim());
                 sentence.setDocumentId(documentId);
-                sentence.setLanguageId(languageId);
-                sentence.setCreatedAt(LocalDateTime.now());
+                sentence.setSourceLanguageId(sourceLanguageId);
+                sentence.setTargetlanguageId(targetLanguageId);
                 sentences.add(sentence);
             }
         }
