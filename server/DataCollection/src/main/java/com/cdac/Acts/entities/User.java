@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -33,6 +32,24 @@ public class User {
 
     private LocalDateTime updatedAt = LocalDateTime.now();
 
+	// Constructor
+	public User(Long userId, String username, String password, String fullName, Role role, String refreshToken,
+			boolean isActive, LocalDateTime createdAt, LocalDateTime updatedAt) {
+		super();
+		this.userId = userId;
+		this.username = username;
+		this.password = password;
+		this.fullName = fullName;
+		this.role = role;
+		this.refreshToken = refreshToken;
+		this.isActive = isActive;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
+
+	public User() {
+	}
+	// Getter and Setter
 	public Long getUserId() {
 		return userId;
 	}
@@ -104,23 +121,7 @@ public class User {
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-
-	public User(Long userId, String username, String password, String fullName, Role role, String refreshToken,
-			boolean isActive, LocalDateTime createdAt, LocalDateTime updatedAt) {
-		super();
-		this.userId = userId;
-		this.username = username;
-		this.password = password;
-		this.fullName = fullName;
-		this.role = role;
-		this.refreshToken = refreshToken;
-		this.isActive = isActive;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
-	}
-
-	public User() {
-	}
+	
 
     
     
