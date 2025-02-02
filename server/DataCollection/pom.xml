@@ -32,6 +32,7 @@
 		<spring-ai.version>1.0.0-M5</spring-ai.version>
 	</properties>
 	 
+	<!--ALL REQUIRED DEPENDENCIES -->
 	<dependencies>
 
 		<!-- 1. Making Rest API -->
@@ -85,7 +86,6 @@
 			<optional>true</optional>
 		</dependency>
 
-
 		<!-- Apache POI for Excel -->
 		<dependency>
     		<groupId>org.apache.poi</groupId>
@@ -115,7 +115,6 @@
 			<artifactId>pdfbox</artifactId>
 			<version>3.0.4</version>
 		</dependency>
-
 
 		<!-- Apache Tika for file parsing -->
 		<!-- https://mvnrepository.com/artifact/org.apache.tika/tika-core -->
