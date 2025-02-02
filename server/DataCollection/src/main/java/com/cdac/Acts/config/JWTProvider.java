@@ -18,7 +18,6 @@ public class JWTProvider {
     private long expirationTime;
 
     // 1. Creation of JWT token
-    // Generate JWT Token with Role
     public String generateToken(String email, String role) {
         return Jwts.builder()
                 .setSubject(email) // Set email as the subject (user identifier)
@@ -68,7 +67,7 @@ public class JWTProvider {
                 .parseClaimsJws(token)
                 .getBody();
     }
-    
+
     // 3. Check if the token is expired
     public boolean isTokenExpired(String token) {
         return extractAllClaims(token).getExpiration().before(new Date());
