@@ -1,11 +1,11 @@
-package com.cdac.Acts.Services;
+package com.cdac.Acts.services;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.cdac.Acts.Repositories.SentenceRepository;
+import com.cdac.Acts.repository.SentenceRepository;
 import com.cdac.Acts.entities.Sentence;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public class SentenceService {
     private SentenceRepository sentenceRepository;
 
     // Get Sentence by ID
-    public ResponseEntity<Sentence> getSentenceById(int sentenceId) {
+    public ResponseEntity<Sentence> getSentenceById(Long sentenceId) {
         Optional<Sentence> sentence = sentenceRepository.findById(sentenceId);
         return sentence.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -31,7 +31,7 @@ public class SentenceService {
     }
 
     // Edit an existing Sentence
-    public ResponseEntity<Sentence> updateSentence(int sentenceId, Sentence sentence) {
+    public ResponseEntity<Sentence> updateSentence(Long sentenceId, Sentence sentence) {
         Optional<Sentence> existingSentence = sentenceRepository.findById(sentenceId);
         if (existingSentence.isPresent()) {
             sentence.setSentenceId(sentenceId); // Ensure the sentenceId is set
@@ -42,7 +42,7 @@ public class SentenceService {
     }
 
     // Delete Sentence
-    public ResponseEntity<String> deleteSentence(int sentenceId) {
+    public ResponseEntity<String> deleteSentence(Long sentenceId) {
         Optional<Sentence> existingSentence = sentenceRepository.findById(sentenceId);
         if (existingSentence.isPresent()) {
             sentenceRepository.deleteById(sentenceId);
@@ -52,7 +52,7 @@ public class SentenceService {
     }
 
     // Get Sentences by Document ID
-    public ResponseEntity<List<Sentence>> getSentencesByDocumentId(int documentId) {
+    public ResponseEntity<List<Sentence>> getSentencesByDocumentId(Long documentId) {
         List<Sentence> sentences = sentenceRepository.findByDocumentId(documentId);
         return sentences.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(sentences);
     }

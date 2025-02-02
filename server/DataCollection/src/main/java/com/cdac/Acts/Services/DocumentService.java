@@ -1,11 +1,11 @@
-package com.cdac.Acts.Services;
+package com.cdac.Acts.services;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.cdac.Acts.Repositories.DocumentsRepository;
+import com.cdac.Acts.repository.DocumentsRepository;
 import com.cdac.Acts.entities.Document;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public class DocumentService {
     private DocumentsRepository documentRepository;
 
     // Get Document by ID
-    public ResponseEntity<Document> getDocumentById(int documentId) {
+    public ResponseEntity<Document> getDocumentById(Long documentId) {
         Optional<Document> document = documentRepository.findById(documentId);
         return document.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -31,7 +31,7 @@ public class DocumentService {
     }
 
     // Edit an existing Document
-    public ResponseEntity<Document> updateDocument(int documentId, Document document) {
+    public ResponseEntity<Document> updateDocument(Long documentId, Document document) {
         Optional<Document> existingDocument = documentRepository.findById(documentId);
         if (existingDocument.isPresent()) {
             document.setDocumentId(documentId);  // Ensure the documentId is set
@@ -42,7 +42,7 @@ public class DocumentService {
     }
 
     // Delete Document
-    public ResponseEntity<String> deleteDocument(int documentId) {
+    public ResponseEntity<String> deleteDocument(Long documentId) {
         Optional<Document> existingDocument = documentRepository.findById(documentId);
         if (existingDocument.isPresent()) {
             documentRepository.deleteById(documentId);

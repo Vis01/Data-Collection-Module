@@ -2,41 +2,34 @@ package com.cdac.Acts.entities;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 
 @Entity
-@Table(name="sentences")
 public class Sentence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="sentence_id")
-    private Integer sentenceId;
+    private Long sentenceId;
 
-    @Column(name="document_id")
-    private Integer documentId;
-    
-    @Column(name="sentence_text")
     private String originalSentence;
 
-    @Column(name="translation_text")
     private String translation;
 
-    @Column(name="sentence_language_id")
-	private byte sourcelanguageId;
-    
-    @Column(name="translation_language_id")
-    private byte targetlanguageId;
+    private Long documentId;
 
-	public Integer getSentenceId() {
+    private byte sourcelanguageId;
+
+    private byte targetlanguageId;
+    
+    private LocalDateTime createdAt;
+
+	public Long getSentenceId() {
 		return sentenceId;
 	}
 
-	public void setSentenceId(Integer sentenceId) {
+	public void setSentenceId(Long sentenceId) {
 		this.sentenceId = sentenceId;
 	}
 
@@ -56,11 +49,11 @@ public class Sentence {
 		this.translation = translation;
 	}
 
-	public Integer getDocumentId() {
+	public Long getDocumentId() {
 		return documentId;
 	}
 
-	public void setDocumentId(Integer documentId) {
+	public void setDocumentId(Long documentId) {
 		this.documentId = documentId;
 	}
 
@@ -79,7 +72,16 @@ public class Sentence {
 	public void setTargetlanguageId(byte targetlanguageId) {
 		this.targetlanguageId = targetlanguageId;
 	}
-	public Sentence(Integer sentenceId, String originalSentence, String translation, Integer documentId, byte sourcelanguageId,byte targetlanguageId,
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Sentence(Long sentenceId, String originalSentence, String translation, Long documentId, byte sourcelanguageId,byte targetlanguageId,
 			LocalDateTime createdAt) {
 		super();
 		this.sentenceId = sentenceId;
@@ -88,6 +90,7 @@ public class Sentence {
 		this.documentId = documentId;
 		this.sourcelanguageId = sourcelanguageId;
 		this.targetlanguageId = targetlanguageId;
+		this.createdAt = createdAt;
 	}
 
 	public Sentence() {
