@@ -1,7 +1,8 @@
 package com.cdac.Acts.dto;
 
+// This class is used to map the login response JSON to a Java object
 public class LoginResponse {
-
+    
     private String token;
     private String username;
     private String role;
@@ -12,8 +13,7 @@ public class LoginResponse {
         this.username = username;
         this.role = role;
     }
-
-    // Getter and Setter for token
+    // Getter and Setter 
     public String getToken() {
         return token;
     }
@@ -22,7 +22,6 @@ public class LoginResponse {
         this.token = token;
     }
 
-    // Getter and Setter for username
     public String getUsername() {
         return username;
     }
@@ -31,7 +30,6 @@ public class LoginResponse {
         this.username = username;
     }
 
-    // Getter and Setter for role
     public String getRole() {
         return role;
     }
