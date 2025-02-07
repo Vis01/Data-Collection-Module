@@ -1,19 +1,30 @@
 package com.cdac.Acts.config;
 
+<<<<<<< HEAD
 
+=======
+ 
+>>>>>>> 6c116af2847faee897a2dfaf71c19c1e9e050611
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6c116af2847faee897a2dfaf71c19c1e9e050611
 import com.cdac.Acts.entities.Role;
 import com.cdac.Acts.entities.User;
 import com.cdac.Acts.repository.UserRepository;
 
 @Configuration
 public class InitialAdminSetup {
+<<<<<<< HEAD
 
+=======
+    // This class is used to create an initial admin user if no users exist in the database
+>>>>>>> 6c116af2847faee897a2dfaf71c19c1e9e050611
     @Autowired
     private PasswordEncoder passwordEncoder;
 

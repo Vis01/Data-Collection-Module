@@ -33,6 +33,27 @@ public class User {
 
     private LocalDateTime updatedAt = LocalDateTime.now();
 
+<<<<<<< HEAD
+=======
+	// Constructor
+	public User(Long userId, String username, String password, String fullName, Role role, String refreshToken,
+			boolean isActive, LocalDateTime createdAt, LocalDateTime updatedAt) {
+		super();
+		this.userId = userId;
+		this.username = username;
+		this.password = password;
+		this.fullName = fullName;
+		this.role = role;
+		this.refreshToken = refreshToken;
+		this.isActive = isActive;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
+
+	public User() {
+	}
+	// Getter and Setter
+>>>>>>> 6c116af2847faee897a2dfaf71c19c1e9e050611
 	public Long getUserId() {
 		return userId;
 	}
@@ -104,6 +125,7 @@ public class User {
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+<<<<<<< HEAD
 
 	public User(Long userId, String username, String password, String fullName, Role role, String refreshToken,
 			boolean isActive, LocalDateTime createdAt, LocalDateTime updatedAt) {
@@ -121,6 +143,9 @@ public class User {
 
 	public User() {
 	}
+=======
+	
+>>>>>>> 6c116af2847faee897a2dfaf71c19c1e9e050611
 
     
     

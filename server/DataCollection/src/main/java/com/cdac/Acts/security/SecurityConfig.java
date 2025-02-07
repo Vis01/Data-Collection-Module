@@ -24,10 +24,17 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+<<<<<<< HEAD
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final CustomDBBasedUserDetailsService customUserDetailsService;
 
+=======
+    // Injecting JwtAuthenticationFilter and CustomDBBasedUserDetailsService
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final CustomDBBasedUserDetailsService customUserDetailsService;
+    
+>>>>>>> 6c116af2847faee897a2dfaf71c19c1e9e050611
     public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, CustomDBBasedUserDetailsService customUserDetailsService) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.customUserDetailsService = customUserDetailsService;
@@ -51,7 +58,11 @@ public class SecurityConfig {
         return authProvider;
     }
 
+<<<<<<< HEAD
     // ✅ Add CORS directly to Spring Security
+=======
+    //  Add CORS directly to Spring Security
+>>>>>>> 6c116af2847faee897a2dfaf71c19c1e9e050611
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -72,7 +83,11 @@ public class SecurityConfig {
         return http.build();
     }
 
+<<<<<<< HEAD
     // ✅ CORS Configuration to allow all origins
+=======
+    //  CORS Configuration to allow all origins
+>>>>>>> 6c116af2847faee897a2dfaf71c19c1e9e050611
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -86,6 +101,7 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+<<<<<<< HEAD
 
     // ✅ WebMvcConfigurer to ensure CORS works globally
 //    @Bean
@@ -102,4 +118,6 @@ public class SecurityConfig {
 //            }
 //        };
 //    }
+=======
+>>>>>>> 6c116af2847faee897a2dfaf71c19c1e9e050611
 }

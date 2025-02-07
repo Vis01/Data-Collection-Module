@@ -2,7 +2,10 @@ package com.cdac.Acts.entities;
 
 import java.time.LocalDateTime;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6c116af2847faee897a2dfaf71c19c1e9e050611
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -26,9 +29,12 @@ public class Sentence {
 
     private byte targetlanguageId;
     
+<<<<<<< HEAD
     @Enumerated(EnumType.STRING)
     private Status status = Status.PENDING;
     
+=======
+>>>>>>> 6c116af2847faee897a2dfaf71c19c1e9e050611
     private LocalDateTime createdAt;
 
 	public Long getSentenceId() {
@@ -86,6 +92,7 @@ public class Sentence {
 	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
+<<<<<<< HEAD
 	public Status getStatus() {
 		return status;
 	}
@@ -98,6 +105,11 @@ public class Sentence {
 	
 	public Sentence(Long sentenceId, String originalSentence, String translation, Long documentId, byte sourcelanguageId,byte targetlanguageId,
 			LocalDateTime createdAt,Status status) {
+=======
+
+	public Sentence(Long sentenceId, String originalSentence, String translation, Long documentId, byte sourcelanguageId,byte targetlanguageId,
+			LocalDateTime createdAt) {
+>>>>>>> 6c116af2847faee897a2dfaf71c19c1e9e050611
 		super();
 		this.sentenceId = sentenceId;
 		this.originalSentence = originalSentence;
@@ -106,7 +118,10 @@ public class Sentence {
 		this.sourcelanguageId = sourcelanguageId;
 		this.targetlanguageId = targetlanguageId;
 		this.createdAt = createdAt;
+<<<<<<< HEAD
 		this.status = status;
+=======
+>>>>>>> 6c116af2847faee897a2dfaf71c19c1e9e050611
 	}
 
 	public Sentence() {

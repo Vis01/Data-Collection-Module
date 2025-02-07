@@ -6,7 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.cdac.Acts.repository.DocumentsRepository;
+<<<<<<< HEAD
 import com.cdac.Acts.repository.UserRepository;
+=======
+>>>>>>> 6c116af2847faee897a2dfaf71c19c1e9e050611
 import com.cdac.Acts.entities.Document;
 import com.cdac.Acts.entities.User;
 

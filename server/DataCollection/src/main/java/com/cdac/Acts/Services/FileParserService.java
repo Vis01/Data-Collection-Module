@@ -4,6 +4,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.tika.Tika;

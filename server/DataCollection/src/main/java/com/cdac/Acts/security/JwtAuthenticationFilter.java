@@ -8,7 +8,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6c116af2847faee897a2dfaf71c19c1e9e050611
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -53,7 +56,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authentication Failed: " + e.getMessage());
             return;
         }
+<<<<<<< HEAD
         
+=======
+>>>>>>> 6c116af2847faee897a2dfaf71c19c1e9e050611
         filterChain.doFilter(request, response);
     }
 }

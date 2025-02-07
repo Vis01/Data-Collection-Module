@@ -1,7 +1,11 @@
 package com.cdac.Acts.config;
 
 import java.util.*;
+<<<<<<< HEAD
 
+=======
+import org.springframework.context.annotation.Bean;
+>>>>>>> 6c116af2847faee897a2dfaf71c19c1e9e050611
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,7 +13,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6c116af2847faee897a2dfaf71c19c1e9e050611
 import com.cdac.Acts.entities.Role;
 import com.cdac.Acts.entities.User;
 import com.cdac.Acts.repository.UserRepository;

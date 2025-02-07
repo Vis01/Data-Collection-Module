@@ -32,6 +32,10 @@
 		<spring-ai.version>1.0.0-M5</spring-ai.version>
 	</properties>
 	 
+<<<<<<< HEAD
+=======
+	<!--ALL REQUIRED DEPENDENCIES -->
+>>>>>>> 6c116af2847faee897a2dfaf71c19c1e9e050611
 	<dependencies>
 
 		<!-- 1. Making Rest API -->
@@ -85,7 +89,10 @@
 			<optional>true</optional>
 		</dependency>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6c116af2847faee897a2dfaf71c19c1e9e050611
 		<!-- Apache POI for Excel -->
 		<dependency>
     		<groupId>org.apache.poi</groupId>
@@ -116,7 +123,15 @@
 			<version>3.0.4</version>
 		</dependency>
 
+		<!-- Apache Tika for file parsing -->
+		<!-- https://mvnrepository.com/artifact/org.apache.tika/tika-core -->
+		<dependency>
+			<groupId>org.apache.tika</groupId>
+			<artifactId>tika-core</artifactId>
+			<version>3.0.0</version>
+		</dependency>
 
+<<<<<<< HEAD
 		<!-- Apache Tika for file parsing -->
 		<!-- https://mvnrepository.com/artifact/org.apache.tika/tika-core -->
 		<dependency>
@@ -138,6 +153,21 @@
 			<scope>runtime</scope>
 		</dependency>
 
+=======
+		<!-- 5. JWT implementation -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.11.5</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>0.11.5</version>
+			<scope>runtime</scope>
+		</dependency>
+
+>>>>>>> 6c116af2847faee897a2dfaf71c19c1e9e050611
 		<!-- JWT for token generation -->
 		<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
 		<dependency>

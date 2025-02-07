@@ -3,17 +3,29 @@ package com.cdac.Acts.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+<<<<<<< HEAD
 
 import com.cdac.Acts.services.UserService;
+=======
+import com.cdac.Acts.Services.UserService;
+>>>>>>> 6c116af2847faee897a2dfaf71c19c1e9e050611
 import com.cdac.Acts.dto.LoginRequest;
 import com.cdac.Acts.dto.SignUpRequest;
 import com.cdac.Acts.entities.User;
 
+<<<<<<< HEAD
+=======
+//Controller to Handles user registration, authentication, and profile management
+>>>>>>> 6c116af2847faee897a2dfaf71c19c1e9e050611
 @RestController
 @RequestMapping("/api/user")
 @CrossOrigin(origins = "*")
 public class UserController {
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 6c116af2847faee897a2dfaf71c19c1e9e050611
     @Autowired
     private UserService userService;
 
