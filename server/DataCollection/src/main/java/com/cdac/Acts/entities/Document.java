@@ -2,38 +2,31 @@ package com.cdac.Acts.entities;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 
 @Entity
-@Table(name="documents")
 public class Document {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="document_id")
-    private Integer documentId;
+    private Long documentId;
 
-    @Column(name="user_id")
-    private Integer userId;
+    private Long userId;
 
-    @Column(name="file_name")
     private String fileName;
 
-    @Column(name="upload_date")
+    private String filePath;
+
     private LocalDateTime uploadDate = LocalDateTime.now();
 
     @Enumerated(EnumType.STRING)
-    @Column(name="status")
     private Status status = Status.PENDING;
 
-    @Column(name="verifier_id")
-    private Integer verifierId;
+    private Long verifierId;
 
     
 
@@ -42,12 +35,13 @@ public class Document {
 
 
 
-	public Document(Integer documentId, Integer userId, String fileName, String filePath, LocalDateTime uploadDate,
-			Status status, Integer verifierId) {
+	public Document(Long documentId, Long userId, String fileName, String filePath, LocalDateTime uploadDate,
+			Status status, Long verifierId) {
 		super();
 		this.documentId = documentId;
 		this.userId = userId;
 		this.fileName = fileName;
+		this.filePath = filePath;
 		this.uploadDate = uploadDate;
 		this.status = status;
 		this.verifierId = verifierId;
@@ -55,25 +49,25 @@ public class Document {
 
 
 
-	public Integer getDocumentId() {
+	public Long getDocumentId() {
 		return documentId;
 	}
 
 
 
-	public void setDocumentId(Integer documentId) {
+	public void setDocumentId(Long documentId) {
 		this.documentId = documentId;
 	}
 
 
 
-	public Integer getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
 
 
-	public void setUserId(Integer userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
@@ -88,6 +82,20 @@ public class Document {
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
+
+
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+
+
 
 	public LocalDateTime getUploadDate() {
 		return uploadDate;
@@ -113,19 +121,13 @@ public class Document {
 
 
 
-	public Integer getVerifierId() {
+	public Long getVerifierId() {
 		return verifierId;
 	}
 
 
 
-	public void setVerifierId(Integer verifierId) {
+	public void setVerifierId(Long verifierId) {
 		this.verifierId = verifierId;
 	}
-
-
-
-	public enum Status {
-        PENDING, VERIFIED, REJECTED
-    }
 }

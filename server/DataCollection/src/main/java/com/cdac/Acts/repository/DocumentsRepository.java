@@ -1,4 +1,4 @@
-package com.cdac.Acts.Repositories;
+package com.cdac.Acts.repository;
 
 import java.util.List;
 
@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.cdac.Acts.entities.Document;
 
 @Repository
-public interface DocumentsRepository extends JpaRepository<Document, Integer> {
-
-	List<Document> findByUserId(int userId);
+public interface DocumentsRepository extends JpaRepository<Document, Long> {
+    List<Document> findByUserId(Long userId);
 }

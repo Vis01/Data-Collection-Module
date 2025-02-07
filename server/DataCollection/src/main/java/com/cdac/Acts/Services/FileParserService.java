@@ -1,29 +1,27 @@
-package com.cdac.Acts.Services;
+package com.cdac.Acts.services;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.cdac.Acts.Repositories.DocumentsRepository;
-import com.cdac.Acts.Repositories.LanguageRepository;
-import com.cdac.Acts.Repositories.SentenceRepository;
+import com.cdac.Acts.repository.DocumentsRepository;
+import com.cdac.Acts.repository.LanguageRepository;
+import com.cdac.Acts.repository.SentenceRepository;
 import com.cdac.Acts.entities.Document;
-import com.cdac.Acts.entities.Language;
-import com.cdac.Acts.entities.Language;
 import com.cdac.Acts.entities.Sentence;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class FileParserService {
 
-    @Autowired
+	@Autowired
     private SentenceRepository sentencesRepository;
 
     @Autowired
@@ -32,7 +30,7 @@ public class FileParserService {
     @Autowired
     private LanguageRepository languageRepository;
 
-    public void processFile(MultipartFile file, int userId, byte sourceLanguageId, byte targetLanguageId) throws Exception {
+    public void processFile(MultipartFile file, Long userId, Byte sourceLanguageId, Byte targetLanguageId) throws Exception {
         // Save the document metadata
         Document document = new Document();
         document.setUserId(userId);
@@ -44,8 +42,8 @@ public class FileParserService {
         List<Sentence> sentences = new ArrayList<>();
 
         
-        Language language = languageRepository.findById(1L)  
-                .orElseThrow(() -> new IllegalArgumentException("Invalid language ID"));
+//        Language language = languageRepository.findById(1L)  
+//                .orElseThrow(() -> new IllegalArgumentException("Invalid language ID"));
 
         if (fileType != null && fileType.equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")) {
             // If it's an Excel file, parse it
@@ -63,14 +61,13 @@ public class FileParserService {
         sentencesRepository.saveAll(sentences);
     }
 
-    private List<Sentence> parseExcelFile(InputStream inputStream, Integer documentId, byte sourceLanguageId, byte targetLanguageId) throws Exception {
+    private List<Sentence> parseExcelFile(InputStream inputStream, Long documentId, Byte sourceLanguageId, Byte targetLanguageId) throws Exception {
         List<Sentence> sentences = new ArrayList<>();
         Workbook workbook = WorkbookFactory.create(inputStream);
         Sheet sheet = workbook.getSheetAt(0);
 
         for (Row row : sheet) {
             if (row.getRowNum() == 0) continue; // Skip header row
-
             Cell sentenceCell = row.getCell(0);
             Cell translationCell = row.getCell(1);
 
@@ -93,7 +90,7 @@ public class FileParserService {
         return sentences;
     }
 
-    private List<Sentence> parseWordFile(InputStream inputStream, Integer documentId, byte sourceLanguageId, byte targetLanguageId) throws Exception {
+    private List<Sentence> parseWordFile(InputStream inputStream, Long documentId, Byte sourceLanguageId, Byte targetLanguageId) throws Exception {
         List<Sentence> sentences = new ArrayList<>();
 
         // Create a Word document object using Apache POI
@@ -120,7 +117,7 @@ public class FileParserService {
         document.close();
         return sentences;
     }
-    private List<Sentence> parseOtherFile(InputStream inputStream, Integer documentId, byte sourceLanguageId, byte targetLanguageId) throws Exception {
+    private List<Sentence> parseOtherFile(InputStream inputStream, Long documentId, byte sourceLanguageId, byte targetLanguageId) throws Exception {
         List<Sentence> sentences = new ArrayList<>();
         Tika tika = new Tika();
         String content = tika.parseToString(inputStream);

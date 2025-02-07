@@ -1,4 +1,4 @@
-package com.cdac.Acts.Repositories;
+package com.cdac.Acts.repository;
 
 import java.util.List;
 
@@ -9,6 +9,6 @@ import com.cdac.Acts.entities.GlobalDatabase;
 
 @Repository
 public interface GlobalDatabaseRepository extends JpaRepository<GlobalDatabase, Long> {
-    //List<GlobalDatabase> findBySentenceLanguageId(Long languageId);
-    //List<GlobalDatabase> findByTranslationLanguageId(Long translationLanguageId);
+    List<GlobalDatabase> findBySentenceLanguage_LanguageId(Long languageId);
+    List<GlobalDatabase> findByTranslationLanguage_LanguageId(Long languageId);;
 }
